@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 
 
 from lists.views import home_page
+from lists.models import Item
 
 
 
@@ -33,8 +34,6 @@ class HomePageTest(TestCase):
         # self.assertTrue(html.strip().endswith('</html>'))
 
 
-
-
         # request = HttpRequest()
         # response = home_page(request)
         # html = response.content.decode('utf8')
@@ -43,19 +42,41 @@ class HomePageTest(TestCase):
                                                         #(Use django's functionrender_to_string that allows us to do this
 
 
-
-
         # print(repr(html))                      #checking to see why the startswith(<html>) did not work turn out its <!DOCTYPE html>.
         # self.assertTrue(html.startswith('<!DOCTYPE html>'))
         # self.assertIn('<title>To-Do lists</title>',html)
         # self.assertTrue(html.strip().endswith('</html>'))
 
 
-
-
         # def test_root_url_resolves_to_home_page_view(self):       #Was the first test written but got supplanted by the
         #     found = resolve('/')                                  #test_home_page_returns_correct_html func bc the
         #     self.assertEqual(found.func,home_page)                #Test Client implicitly tests for the resolve of the root url
+
+
+class ItemModelTest(TestCase):
+
+    def test_saving_and_retrieving_items(self):
+        first_item = Item()
+        first_item.text = 'The first (ever) list item'
+        first_item.save()
+
+        second_item = Item()
+        second_item.text = 'Item the second'
+        second_item.save()
+
+        saved_items = Item.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
+        self.assertEqual(second_saved_item.text, 'Item the second')
+
+
+
+
+
+
 
 
 #12-30-17 2:20 pm
