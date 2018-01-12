@@ -20,6 +20,6 @@ from lists import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', views.main_page, name='main'),
+    path('', views.main_page, name='main'),
     path('ToDo/', views.home_page, name='home'),
 ]
