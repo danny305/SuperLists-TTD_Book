@@ -17,7 +17,13 @@ class HomePageTest(TestCase):
 
         #The proceeding two lines test our implementation and not constants
         response = self.client.get('/')                         #Utilizing django Test Client tool (built in way to check template used
-        self.assertTemplateUsed(response,'wrong.html')          # This test method ONLY works on responses retrieved by the test client
+        self.assertTemplateUsed(response,'home.html')          # This test method ONLY works on responses retrieved by the test client
+
+    def test_can_save_a_POST_request(self):
+        response = self.client.post('/', data={'item_text': 'A new list item'})
+        self.assertIn('A new list item', response.content.decode())
+        self.assertTemplateUsed(response, 'home.html')
+
 
 
 
