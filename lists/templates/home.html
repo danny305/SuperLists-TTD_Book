@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>To-Do lists</title>
+    <style>
+        body {background-color:black;}
+        h1 {color: crimson}
+        li {color: darkorange}
+        p1 {color: ghostwhite}
+        input {color: blue;}
+        td {color: ghostwhite}
+    </style>
 </head>
 
 <body>
@@ -14,7 +22,9 @@
         {% csrf_token %}
     </form>
     <table id="id_list_table">
-        <tr><td>1: {{ new_item_text }}</td></tr>
+        {% for item in items %}
+            <tr><td>{{ forloop.counter}}: {{ item.text }}</td></tr>
+        {% endfor %}}
     </table>
 </body>
 
