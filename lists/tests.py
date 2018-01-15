@@ -17,11 +17,11 @@ class HomePageTest(TestCase):
     def test_home_page_returns_correct_html(self):
 
         #The proceeding two lines test our implementation and not constants
-        response = self.client.get('/ToDo/')                         #Utilizing django Test Client tool (built in way to check template used
+        response = self.client.get('/')                         #Utilizing django Test Client tool (built in way to check template used
         self.assertTemplateUsed(response,'home.html')          # This test method ONLY works on responses retrieved by the test client
 
     def test_can_save_a_POST_request(self):
-        self.client.post('/ToDo/', data={'item_text': 'A new list item'})
+        self.client.post('/', data={'item_text': 'A new list item'})
 
         self.assertEqual(Item.objects.count(),1)
         new_item = Item.objects.first()
@@ -41,7 +41,7 @@ class HomePageTest(TestCase):
         # self.assertTemplateUsed(response, 'home.html')
 
     def test_redirects_after_POST(self):
-        response = self.client.post('/ToDo/', data = {'item_text': 'A new list item'})
+        response = self.client.post('/', data = {'item_text': 'A new list item'})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/ToDo/')
 
@@ -78,7 +78,7 @@ class HomePageTest(TestCase):
 
 
     def test_only_saves_items_when_necessary(self):
-        self.client.get('/ToDo/')
+        self.client.get('/')
         self.assertEqual(Item.objects.count(),0)
 
 
@@ -86,7 +86,7 @@ class HomePageTest(TestCase):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
 
-        response = self.client.get('/ToDo/')
+        response = self.client.get('/')
 
         self.assertIn('itemey 1', response.content.decode())
         self.assertIn('itemey 2', response.content.decode())
