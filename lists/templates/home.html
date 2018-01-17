@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <title>To-Do lists</title>
     <style>
-        body {background-color:darkslategrey;}
+        body {background-color:black;}
         h1 {color: ghostwhite;}
         li {color: ghostwhite;}
         p1 {color: ghostwhite;}
         input {color: blue;}
         td {color: ghostwhite;}
+
     </style>
 </head>
 
@@ -24,7 +25,7 @@
     <table id="id_list_table">
         {% for item in items %}
             <tr><td>{{ forloop.counter}}: {{ item.text }}</td></tr>
-        {% endfor %}}
+        {% endfor %}
     </table>
 </body>
 
