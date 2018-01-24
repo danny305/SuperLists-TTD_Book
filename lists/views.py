@@ -9,12 +9,15 @@ from django.http import HttpResponse
     #return HttpResponse('<html><title>To-Do lists</title></html>')
 
 def home_page(request):
-    if request.method == "POST":
-        Item.objects.create(text=request.POST['item_text'])
-        return redirect('/lists/the-only-list-in-the-world/')
+    return render(request, 'home.html')     #simplified the homepage and moved all the lists stuff to /lists/ URL
 
-    items = Item.objects.all()
-    return render(request, 'home.html')
+
+    # if request.method == "POST":
+    #     Item.objects.create(text=request.POST['item_text'])
+    #     return redirect('/lists/the-only-list-in-the-world/')
+    #
+    # items = Item.objects.all()
+    # return render(request, 'home.html')
 
 
 
@@ -50,6 +53,10 @@ def home_page(request):
 def view_list(request):
     items = Item.objects.all()
     return render(request, 'list.html', {'items': items})
+
+def new_list(request):
+    Item.objects.create(text=request.POST['item_text'])
+    return redirect('/lists/the-only-list-in-the-world/')
 
 
 def main_page(request):

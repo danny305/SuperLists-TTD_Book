@@ -20,9 +20,12 @@ class HomePageTest(TestCase):
         response = self.client.get('/')                         #Utilizing django Test Client tool (built in way to check template used
         self.assertTemplateUsed(response,'home.html')          # This test method ONLY works on responses retrieved by the test client
 
-    def test_can_save_a_POST_request(self):
-        self.client.post('/', data={'item_text': 'A new list item'})
 
+
+class NewListTest(TestCase):
+
+    def test_can_save_a_POST_request(self):
+        self.client.post('/lists/new', data={'item_text': 'A new list item'})
         self.assertEqual(Item.objects.count(),1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new list item')
@@ -41,9 +44,11 @@ class HomePageTest(TestCase):
         # self.assertTemplateUsed(response, 'home.html')
 
     def test_redirects_after_POST(self):
-        response = self.client.post('/', data = {'item_text': 'A new list item'})
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+        response = self.client.post('/lists/new', data = {'item_text': 'A new list item'})
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')     #supplants the 2 asserts below
+
+        # self.assertEqual(response.status_code, 302)
+        # self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
 
 
 
@@ -78,9 +83,9 @@ class HomePageTest(TestCase):
         #     self.assertEqual(found.func,home_page)                #Test Client implicitly tests for the resolve of the root url
 
 
-    def test_only_saves_items_when_necessary(self):
-        self.client.get('/')
-        self.assertEqual(Item.objects.count(),0)
+    # def test_only_saves_items_when_necessary(self):
+    #     self.client.get('/')
+    #     self.assertEqual(Item.objects.count(),0)
 
 
     # def test_displays_all_list_items(self):
