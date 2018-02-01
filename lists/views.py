@@ -60,12 +60,13 @@ def view_list(request, list_id):
 
 def new_list(request):
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST['item_text'], list=list_)
+    if request.method == "POST":
+        Item.objects.create(text=request.POST['item_text'] , list=list_)
     return redirect(f'/lists/{list_.id}/')
 
 
-def add_item(request,list_id):
-    list_ =List.objects.get(id=list_id)
+def add_item(request, list_id):
+    list_ = List.objects.get(id=list_id)
     Item.objects.create(text=request.POST['item_text'], list=list_)
     return redirect(f'/lists/{list_.id}/')
 
@@ -76,5 +77,5 @@ def add_item(request,list_id):
 
 
 def main_page(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
